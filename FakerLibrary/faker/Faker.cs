@@ -1,8 +1,10 @@
-﻿using System;
-
-namespace FakerLibrary
+﻿namespace FakerLibrary.faker
 {
-    public class Class1
+    public class Faker: IFaker
     {
+        public T Create<T>()
+        {
+            return default;
+        }
     }
 }

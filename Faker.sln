@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakerLibrary", "FakerLibrary\FakerLibrary.csproj", "{91E8A9F7-08EC-46D2-A68A-1ACAC6231A2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakerTests", "FakerTests\FakerTests.csproj", "{C84219E8-9651-4A8A-AA79-6220BD0BCC7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakerConsoleApp", "FakerConsoleApp\FakerConsoleApp.csproj", "{EC762F35-242E-41FF-AD1A-EB4A83936A6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakerPlugins", "FakerPlugins\FakerPlugins.csproj", "{0633D132-C20D-4B36-970A-2CCB2C330575}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91E8A9F7-08EC-46D2-A68A-1ACAC6231A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91E8A9F7-08EC-46D2-A68A-1ACAC6231A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91E8A9F7-08EC-46D2-A68A-1ACAC6231A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91E8A9F7-08EC-46D2-A68A-1ACAC6231A2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C84219E8-9651-4A8A-AA79-6220BD0BCC7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C84219E8-9651-4A8A-AA79-6220BD0BCC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C84219E8-9651-4A8A-AA79-6220BD0BCC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C84219E8-9651-4A8A-AA79-6220BD0BCC7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC762F35-242E-41FF-AD1A-EB4A83936A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC762F35-242E-41FF-AD1A-EB4A83936A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC762F35-242E-41FF-AD1A-EB4A83936A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC762F35-242E-41FF-AD1A-EB4A83936A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0633D132-C20D-4B36-970A-2CCB2C330575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0633D132-C20D-4B36-970A-2CCB2C330575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0633D132-C20D-4B36-970A-2CCB2C330575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0633D132-C20D-4B36-970A-2CCB2C330575}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

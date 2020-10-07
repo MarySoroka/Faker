@@ -16,6 +16,10 @@
     <e p="C:\Users\Maria\Documents\mpp\FakerLab" t="IncludeFlat">
       <e p="Faker.sln" t="IncludeFlat" />
       <e p="FakerConsoleApp" t="IncludeRecursive">
+        <e p="application" t="Include">
+          <e p="FakerApp.cs" t="Include" />
+          <e p="FakerAppClass.cs" t="Include" />
+        </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="FakerConsoleApp.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
@@ -25,15 +29,25 @@
             </e>
           </e>
         </e>
-        <e p="Program.cs" t="Include" />
       </e>
       <e p="FakerLibrary" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
-        <e p="Class1.cs" t="Include" />
+        <e p="faker" t="Include">
+          <e p="Faker.cs" t="Include" />
+          <e p="FakerConfiguration.cs" t="Include" />
+          <e p="FakerGeneratorRule.cs" t="Include" />
+          <e p="IFaker.cs" t="Include" />
+        </e>
         <e p="FakerLibrary.csproj" t="IncludeRecursive" />
         <e p="generators" t="Include">
           <e p="DateGenerator.cs" t="Include" />
+          <e p="DoubleGenerator.cs" t="Include" />
+          <e p="FloatGenerator.cs" t="Include" />
+          <e p="ICollectionGenerator.cs" t="Include" />
+          <e p="IGenerator.cs" t="Include" />
           <e p="IntegerGenerator.cs" t="Include" />
+          <e p="IPrimitiveGenerator.cs" t="Include" />
+          <e p="ListGenerator.cs" t="Include" />
           <e p="LongGenerator.cs" t="Include" />
           <e p="StringGenerator.cs" t="Include" />
         </e>
@@ -47,8 +61,10 @@
       </e>
       <e p="FakerPlugins" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
-        <e p="Class1.cs" t="Include" />
         <e p="FakerPlugins.csproj" t="IncludeRecursive" />
+        <e p="generatorPlugin" t="Include">
+          <e p="Generator.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
@@ -59,7 +75,19 @@
       </e>
       <e p="FakerTests" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
+        <e p="faker" t="Include">
+          <e p="FakerTest.cs" t="Include" />
+          <e p="FakerTestClass.cs" t="Include" />
+        </e>
         <e p="FakerTests.csproj" t="IncludeRecursive" />
+        <e p="generators" t="Include">
+          <e p="DateGeneratorTest.cs" t="Include" />
+          <e p="DoubleGeneratorTest.cs" t="Include" />
+          <e p="FloatGeneratorTest.cs" t="Include" />
+          <e p="IntegerGeneratorTest.cs" t="Include" />
+          <e p="LongGeneratorTest.cs" t="Include" />
+          <e p="StringGeneratorTest.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
@@ -67,7 +95,6 @@
             </e>
           </e>
         </e>
-        <e p="UnitTest1.cs" t="Include" />
       </e>
       <e p="packages" t="ExcludeRecursive" />
     </e>

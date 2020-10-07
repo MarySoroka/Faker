@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace FakerTests
+namespace FakerTests.faker
 {
     public class Tests
     {

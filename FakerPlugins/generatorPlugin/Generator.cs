@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace FakerPlugins
+﻿namespace FakerPlugins.generatorPlugin
 {
-    public class Class1
+    public class Generator
     {
     }
 }

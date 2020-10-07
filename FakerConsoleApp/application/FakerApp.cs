@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace FakerConsoleApp
+namespace FakerConsoleApp.application
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
         }
     }
 }

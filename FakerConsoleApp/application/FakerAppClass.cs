@@ -1,4 +1,4 @@
-﻿namespace FakerConsoleApp
+﻿namespace FakerConsoleApp.application
 {
     public class FakerAppClass
     {
