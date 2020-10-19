@@ -6,8 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakerTests", "FakerTests\Fa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakerConsoleApp", "FakerConsoleApp\FakerConsoleApp.csproj", "{EC762F35-242E-41FF-AD1A-EB4A83936A6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakerPlugins", "FakerPlugins\FakerPlugins.csproj", "{0633D132-C20D-4B36-970A-2CCB2C330575}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +24,5 @@ Global
 		{EC762F35-242E-41FF-AD1A-EB4A83936A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC762F35-242E-41FF-AD1A-EB4A83936A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC762F35-242E-41FF-AD1A-EB4A83936A6D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0633D132-C20D-4B36-970A-2CCB2C330575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0633D132-C20D-4B36-970A-2CCB2C330575}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0633D132-C20D-4B36-970A-2CCB2C330575}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0633D132-C20D-4B36-970A-2CCB2C330575}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
