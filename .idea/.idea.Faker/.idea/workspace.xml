@@ -23,26 +23,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b9b3ba6-cbc1-4d58-8c38-4941f2e35f93" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/FakerLibrary/faker/FakerConfiguration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FakerLibrary/faker/FakerGeneratorRule.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FakerLibrary/generators/ICollectionGenerator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FakerLibrary/generators/IPrimitiveGenerator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FakerLibrary/generators/ListGenerator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FakerLibrary/faker/FakerUtils.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FakerLibrary/generators/BooleanGenerator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FakerLibrary/generators/ShortGenerator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Faker/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Faker/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerConsoleApp/application/FakerApp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerConsoleApp/application/FakerApp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerConsoleApp/application/FakerAppClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerConsoleApp/application/FakerAppClass.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Faker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Faker/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FakerLibrary/faker/Faker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/faker/Faker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerLibrary/faker/IFaker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/faker/IFaker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/DateGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/DateGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/DoubleGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/DoubleGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/FloatGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/FloatGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/IntegerGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/IntegerGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakerLibrary/faker/FakerConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/faker/FakerConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakerLibrary/faker/FakerGeneratorRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/faker/FakerGeneratorRule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/ICollectionGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/ICollectionGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/IGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/IGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/IPrimitiveGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/IPrimitiveGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/ListGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/ListGenerator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/LongGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/LongGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerLibrary/generators/StringGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/StringGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerPlugins/generatorPlugin/Generator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerPlugins/generatorPlugin/Generator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerPlugins/generatorPlugin/IGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerLibrary/generators/IGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerTests/FakerTests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/FakerTests/FakerTests.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FakerTests/faker/FakerTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FakerTests/faker/FakerTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,20 +64,24 @@
         <option value="$PROJECT_DIR$/FakerConsoleApp/application/FakerApp.cs" />
         <option value="$PROJECT_DIR$/FakerPlugins/generatorPlugin/Generator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/generators/ListGenrator.cs" />
-        <option value="$PROJECT_DIR$/FakerLibrary/generators/IGenerator.cs" />
-        <option value="$PROJECT_DIR$/FakerLibrary/generators/IPrimitiveGenerator.cs" />
-        <option value="$PROJECT_DIR$/FakerLibrary/generators/ICollectionGenerator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/generators/DateGenerator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/generators/DoubleGenerator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/generators/FloatGenerator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/generators/IntegerGenerator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/generators/StringGenerator.cs" />
+        <option value="$PROJECT_DIR$/FakerLibrary/faker/IFaker.cs" />
+        <option value="$PROJECT_DIR$/FakerLibrary/generators/IGenerator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/generators/LongGenerator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/generators/ListGenerator.cs" />
-        <option value="$PROJECT_DIR$/FakerLibrary/faker/IFaker.cs" />
-        <option value="$PROJECT_DIR$/FakerLibrary/faker/Faker.cs" />
+        <option value="$PROJECT_DIR$/FakerLibrary/generators/ShortGenerator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/faker/FakerGeneratorRule.cs" />
+        <option value="$PROJECT_DIR$/FakerLibrary/generators/BolleanGenerator.cs" />
+        <option value="$PROJECT_DIR$/FakerLibrary/generators/BooleanGenerator.cs" />
         <option value="$PROJECT_DIR$/FakerLibrary/faker/FakerConfiguration.cs" />
+        <option value="$PROJECT_DIR$/FakerLibrary/generators/ICollectionGenerator.cs" />
+        <option value="$PROJECT_DIR$/FakerLibrary/generators/IPrimitiveGenerator.cs" />
+        <option value="$PROJECT_DIR$/FakerLibrary/faker/FakerUtils.cs" />
+        <option value="$PROJECT_DIR$/FakerLibrary/faker/Faker.cs" />
       </list>
     </option>
   </component>
@@ -139,7 +136,8 @@
       <updated>1601986528152</updated>
       <workItem from="1601986530092" duration="3191000" />
       <workItem from="1602067470367" duration="728000" />
-      <workItem from="1602078192562" duration="5376000" />
+      <workItem from="1602078192562" duration="6722000" />
+      <workItem from="1603111750352" duration="8590000" />
     </task>
     <servers />
   </component>

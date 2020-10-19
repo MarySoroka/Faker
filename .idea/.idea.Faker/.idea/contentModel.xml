@@ -36,10 +36,12 @@
           <e p="Faker.cs" t="Include" />
           <e p="FakerConfiguration.cs" t="Include" />
           <e p="FakerGeneratorRule.cs" t="Include" />
+          <e p="FakerUtils.cs" t="Include" />
           <e p="IFaker.cs" t="Include" />
         </e>
         <e p="FakerLibrary.csproj" t="IncludeRecursive" />
         <e p="generators" t="Include">
+          <e p="BooleanGenerator.cs" t="Include" />
           <e p="DateGenerator.cs" t="Include" />
           <e p="DoubleGenerator.cs" t="Include" />
           <e p="FloatGenerator.cs" t="Include" />
@@ -49,6 +51,7 @@
           <e p="IPrimitiveGenerator.cs" t="Include" />
           <e p="ListGenerator.cs" t="Include" />
           <e p="LongGenerator.cs" t="Include" />
+          <e p="ShortGenerator.cs" t="Include" />
           <e p="StringGenerator.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">

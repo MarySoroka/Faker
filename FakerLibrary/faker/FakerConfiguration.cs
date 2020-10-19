@@ -5,16 +5,16 @@ using FakerLibrary.generators;
 
 namespace FakerLibrary.faker
 {
-    public class FakerConfiguration
+    public abstract class FakerConfiguration
     {
-        private List<FakerGeneratorRule> FakerGeneratorRules { get; }
+        internal List<FakerGeneratorRule> FakerGeneratorRules { get; }
 
-        public FakerConfiguration(List<FakerGeneratorRule> fakerGeneratorRules)
+        protected FakerConfiguration(List<FakerGeneratorRule> fakerGeneratorRules)
         {
             FakerGeneratorRules = fakerGeneratorRules;
         }
 
-        public void AddFakerRule<T, TK, TD>(Expression<Func<T, TK>> fakerRule) where TD: IGenerator<TK>
+        public void AddFakerRule<T, TK, TD>(Expression<Func<T, TK>> fakerRule) where TD: IGenerator
         {
             var fakerGeneratorRule = new FakerGeneratorRule((((MemberExpression)fakerRule.Body).Member.Name),typeof(T), typeof(TK), typeof(TD));
             FakerGeneratorRules.Add(fakerGeneratorRule);

@@ -1,10 +1,224 @@
-﻿namespace FakerLibrary.faker
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using FakerLibrary.generators;
+
+namespace FakerLibrary.faker
 {
-    public class Faker: IFaker
+    public class Faker : IFaker
     {
+        private int MaxCircularDependencyDepth { get; } = 0;
+
+        private readonly Dictionary<Type, IGenerator> _generators;
+
+        private readonly Stack<Type> _fakerStack = new Stack<Type>();
+
+        private readonly List<FakerGeneratorRule> _fakerRules;
+
         public T Create<T>()
         {
-            return default;
+            if (FakerUtils.IsPrimitive(typeof(T)))
+            {
+                try
+                {
+                    return (T) _generators[typeof(T)].GetType().InvokeMember("Generate",
+                        BindingFlags.InvokeMethod | BindingFlags.Instance
+                                                  | BindingFlags.Public, null, _generators[typeof(T)], null);
+                }
+                catch
+                {
+                    return default;
+                }
+            }
+
+            var constructors = typeof(T).GetConstructors(BindingFlags.Instance | BindingFlags.Public);
+
+            if ((constructors.Length == 0 && !typeof(T).IsValueType) ||
+                ((_fakerStack.Count(t => t == typeof(T))) >
+                 MaxCircularDependencyDepth))
+            {
+                return default;
+            }
+
+            _fakerStack.Push(typeof(T));
+
+
+            object constructed = default;
+            if (typeof(T).IsValueType && constructors.Length == 0)
+            {
+                constructed = Activator.CreateInstance(typeof(T));
+            }
+
+            object[] ctorParams = null;
+            ConstructorInfo ctor = null;
+
+            foreach (var cInfo in constructors.OrderByDescending(c => c.GetParameters().Length)
+            )
+            {
+                ctorParams = GenerateCtorParams(cInfo);
+
+                try
+                {
+                    constructed = cInfo.Invoke(ctorParams);
+                    ctor = cInfo;
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+
+            GenerateFieldsAndProperties(constructed, ctorParams,
+                ctor);
+
+            _fakerStack.Pop();
+            return (T) constructed;
+        }
+
+        private void GenerateFieldsAndProperties(object constructed, IReadOnlyList<object> ctorParams, MethodBase cInfo)
+        {
+            var pInfo = cInfo?.GetParameters();
+            var fields = constructed.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public)
+                .Cast<MemberInfo>();
+            var properties = constructed.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .Cast<MemberInfo>();
+            var fieldsAndProperties = fields.Concat(properties);
+
+            foreach (var m in fieldsAndProperties)
+            {
+                var wasInitialized = false;
+
+                var memberType = (m as FieldInfo)?.FieldType ?? (m as PropertyInfo)?.PropertyType;
+                var memberValue = (m as FieldInfo)?.GetValue(constructed) ??
+                                  (m as PropertyInfo)?.GetValue(constructed);
+
+                for (var i = 0; i < ctorParams?.Count; i++)
+                {
+                    var defaultValue = this.GetType()
+                        .GetMethod("GetDefaultValue", BindingFlags.NonPublic | BindingFlags.Instance)
+                        .MakeGenericMethod(memberType).Invoke(this, null);
+                    if ((pInfo == null || ctorParams[i] != memberValue || memberType != pInfo[i].ParameterType ||
+                         m.Name != pInfo[i].Name) && defaultValue?.Equals(memberValue) != false) continue;
+                    wasInitialized = true;
+                    break;
+                }
+
+                if (wasInitialized) continue;
+                object newValue = default; 
+                try
+                {
+                    if (_fakerRules?.Any(r =>
+                        (r.TargetFieldType == memberType) && (r.ParentClassType == constructed.GetType()) &&
+                        (r.FieldName == m.Name)) == true)
+                    {
+                        var gen = Activator.CreateInstance(_fakerRules.Single(r =>
+                            (r.TargetFieldType == memberType) && (r.ParentClassType == constructed.GetType())
+                                                              && (r.FieldName == m.Name)).FieldGeneratorType);
+                        newValue = gen.GetType().InvokeMember("Generate",
+                            BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public, null, gen,
+                            null);
+                    }
+                    else
+                    {
+                        if (!memberType.IsGenericType)
+                        {
+                            newValue = _generators[memberType].GetType().InvokeMember("Generate",
+                                BindingFlags.InvokeMethod | BindingFlags.Instance
+                                                          | BindingFlags.Public, null, _generators[memberType],
+                                null);
+                        }
+                        else
+                        {
+                            var tmp = memberType.GetGenericArguments();
+                            newValue = _generators[tmp[0]].GetType().InvokeMember("GenerateList",
+                                BindingFlags.InvokeMethod | BindingFlags.Instance
+                                                          | BindingFlags.Public, null, _generators[tmp[0]], null);
+                        }
+                    }
+                }
+                catch (KeyNotFoundException e)
+                {
+                    if (!FakerUtils.IsPrimitive(memberType))
+                    {
+                        newValue = GetType().GetMethod("Create").MakeGenericMethod(memberType)
+                            .Invoke(this, null);
+                    }
+                }
+
+                (m as FieldInfo)?.SetValue(constructed, newValue);
+                if ((m as PropertyInfo)?.CanWrite == true)
+                {
+                    (m as PropertyInfo).SetValue(constructed, newValue);
+                }
+            }
+        }
+
+
+        private object[] GenerateCtorParams(ConstructorInfo cInfo)
+        {
+            var pInfo = cInfo.GetParameters();
+            var ctorParams = new object[pInfo.Length];
+
+            for (var i = 0; i < ctorParams.Length; i++)
+            {
+                var fieldType = pInfo[i].ParameterType;
+                object newValue = default;
+                try
+                {
+                    if (_fakerRules?.Any(r =>
+                        (r.TargetFieldType == fieldType) && (r.ParentClassType == cInfo.DeclaringType) &&
+                        (r.FieldName == pInfo[i].Name)) == true)
+                    {
+                        var gen = Activator.CreateInstance(_fakerRules.Single(r =>
+                            (r.TargetFieldType == fieldType) && (r.ParentClassType == cInfo.DeclaringType)
+                                                             && (r.FieldName == pInfo[i].Name)).FieldGeneratorType);
+                        if (gen != null)
+                            newValue = gen.GetType().InvokeMember("Generate", BindingFlags.InvokeMethod |
+                                                                              BindingFlags.Instance |
+                                                                              BindingFlags.Public,
+                                null, gen, null);
+                    }
+                    else
+                    {
+                        if (!fieldType.IsGenericType)
+                        {
+                            newValue = _generators[fieldType].GetType().InvokeMember("Generate",
+                                BindingFlags.InvokeMethod |
+                                BindingFlags.Instance | BindingFlags.Public, null, _generators[fieldType], null);
+                        }
+                        else
+                        {
+                            var tmp = fieldType.GetGenericArguments();
+                            newValue = _generators[tmp[0]].GetType().InvokeMember("GenerateList",
+                                BindingFlags.InvokeMethod |
+                                BindingFlags.Instance | BindingFlags.Public, null, _generators[tmp[0]], null);
+                        }
+                    }
+                }
+                catch (KeyNotFoundException e)
+                {
+                    if (!FakerUtils.IsPrimitive(fieldType))
+                    {
+                        newValue = GetType().GetMethod("Create")?.MakeGenericMethod(fieldType).Invoke(this, null);
+                    }
+                }
+
+                ctorParams[i] = newValue;
+            }
+
+            return ctorParams;
+        }
+
+        public Faker()
+        {
+            _generators = FakerUtils.LoadAllAvailableGenerators();
+        }
+
+        public Faker(FakerConfiguration config) : this()
+        {
+            _fakerRules = config.FakerGeneratorRules;
         }
     }
 }

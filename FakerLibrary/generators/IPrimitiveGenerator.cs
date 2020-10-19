@@ -1,6 +1,7 @@
-﻿namespace FakerLibrary.generators
+﻿
+namespace FakerLibrary.generators
 {
-    public interface IPrimitiveGenerator<out T>: IGenerator<T>
+    public interface IPrimitiveGenerator<out T>: IGenerator
     {
         T Generate();
     }

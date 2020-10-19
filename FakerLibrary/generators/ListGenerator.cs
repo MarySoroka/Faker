@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace FakerLibrary.generators
 {
-    public class ListGenerator<T>: ICollectionGenerator<List<T>>
+    public class ListGenerator: ICollectionGenerator<List<object>>
     {
-        public List<T> Generate(Type baseType)
+        public List<object> Generate(Type baseType)
         {
-            return new List<T>();
+            return new List<object>();
         }
     }
 }

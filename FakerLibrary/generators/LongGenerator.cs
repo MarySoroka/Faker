@@ -2,7 +2,7 @@
 
 namespace FakerLibrary.generators
 {
-    public class LongGenerator: IPrimitiveGenerator<long>
+    public class LongGenerator : IPrimitiveGenerator<long>
     {
         private readonly Random _random;
 
@@ -13,7 +13,7 @@ namespace FakerLibrary.generators
 
         public long Generate()
         {
-            return _random.Next();
+            return _random.Next() << 31 | _random.Next();
         }
     }
 }
