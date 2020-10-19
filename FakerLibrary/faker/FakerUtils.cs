@@ -6,12 +6,12 @@ using FakerLibrary.generators;
 
 namespace FakerLibrary.faker
 {
-    public class FakerUtils
+    public static class FakerUtils
     {
         internal static Dictionary<Type, IGenerator> LoadAllAvailableGenerators()
         {
             var result = new Dictionary<Type, IGenerator>();
-            var pluginsPath = Directory.GetCurrentDirectory() + "\\FakerLib Plugins\\Generators\\";
+            var pluginsPath = Directory.GetCurrentDirectory() + "\\Plugins\\";
             if (!Directory.Exists(pluginsPath))
             {
                 Directory.CreateDirectory(pluginsPath);
@@ -43,7 +43,7 @@ namespace FakerLibrary.faker
             return t.IsPrimitive || (t == typeof(string)) || (t == typeof(decimal)) || (t == typeof(DateTime));
         }
 
-        internal static bool IsRequiredType(Type plugin, Type required)
+        private static bool IsRequiredType(Type plugin, Type required)
         {
             while (plugin != null && plugin != typeof(object))
             {
@@ -58,7 +58,5 @@ namespace FakerLibrary.faker
 
             return false;
         }
-        private FakerUtils(){}
-
     }
 }

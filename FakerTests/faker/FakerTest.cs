@@ -4,7 +4,7 @@ namespace FakerTests.faker
 {
     public class Tests
     {
-        [SetUp]
+        
         public void Setup()
         {
         }

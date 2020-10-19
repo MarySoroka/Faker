@@ -1,8 +1,9 @@
 ﻿using System;
+using FakerLibrary.generators;
 
-namespace FakerLibrary.generators
+namespace BooleanPlugin
 {
-    public class BooleanGenerator: IPrimitiveGenerator<bool>
+    public class BooleanGenerator:IPrimitiveGenerator<bool>
     {
         private readonly Random _random;
 
