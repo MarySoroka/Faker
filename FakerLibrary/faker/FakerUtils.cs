@@ -22,17 +22,20 @@ namespace FakerLibrary.faker
                 var asm = Assembly.LoadFrom(str);
                 foreach (var t in asm.GetTypes())
                 {
-                    if (!IsRequiredType(t, typeof(IGenerator))) continue;
+                    if (!(IsRequiredType(t, typeof(IPrimitiveGenerator<>)) |
+                          IsRequiredType(t, typeof(ICollectionGenerator<>)))) continue;
                     var tmp = Activator.CreateInstance(t);
-                    if (t.BaseType is { }) result.Add(t.BaseType.GetGenericArguments()[0], (IGenerator) tmp);
+                    if (t.BaseType is null) continue;
+                    result.Add(t.GetInterfaces()[0].GenericTypeArguments[0], (IGenerator) tmp);
                 }
             }
 
             foreach (var t in Assembly.GetExecutingAssembly().GetTypes())
             {
-                if (!IsRequiredType(t, typeof(IGenerator))) continue;
+                if (!(IsRequiredType(t, typeof(IPrimitiveGenerator<>)) |
+                      IsRequiredType(t, typeof(ICollectionGenerator<>)))) continue;
                 if (t.BaseType is { })
-                    result.Add(t.BaseType.GetGenericArguments()[0], (IGenerator) Activator.CreateInstance(t));
+                    result.Add(t.GetInterfaces()[0].GenericTypeArguments[0], (IGenerator) Activator.CreateInstance(t));
             }
 
             return result;
@@ -43,20 +46,13 @@ namespace FakerLibrary.faker
             return t.IsPrimitive || (t == typeof(string)) || (t == typeof(decimal)) || (t == typeof(DateTime));
         }
 
-        private static bool IsRequiredType(Type plugin, Type required)
+        private static bool IsRequiredType(Type plugin, MemberInfo required)
         {
-            while (plugin != null && plugin != typeof(object))
-            {
-                var tmp = plugin.IsGenericType ? plugin.GetGenericTypeDefinition() : plugin;
-                if (required == tmp)
-                {
-                    return true;
-                }
-
-                plugin = plugin.BaseType;
-            }
-
-            return false;
+            if (plugin == null || plugin == typeof(object)) return false;
+            var baseInterface = plugin.GetInterface(required.Name);
+            return baseInterface != null;
         }
+        
+        
     }
 }

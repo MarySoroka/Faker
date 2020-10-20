@@ -1,8 +1,9 @@
 ﻿using System;
+using FakerLibrary.generators;
 
-namespace FakerLibrary.generators
+namespace DoubleGenerator
 {
-    public class DoubleGenerator:IPrimitiveGenerator<double>
+    public class DoubleGenerator : IPrimitiveGenerator<double>
     {
         private readonly Random _random;
 

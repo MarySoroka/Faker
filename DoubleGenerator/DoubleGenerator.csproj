@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>DoubleGenerator</AssemblyName>
+        <RootNamespace>DoubleGenerator</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,7 +1,6 @@
-﻿using System;
-using FakerLibrary.generators;
+using System;
 
-namespace BooleanPlugin
+namespace FakerLibrary.generators
 {
     public class BooleanGenerator:IPrimitiveGenerator<bool>
     {
@@ -17,5 +16,6 @@ namespace BooleanPlugin
             return _random.Next(0, 2) != 0;
             
         }
+        
     }
 }

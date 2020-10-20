@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using FakerLibrary.generators;
+using Microsoft.VisualBasic;
 
 namespace FakerLibrary.faker
 {
@@ -16,6 +17,7 @@ namespace FakerLibrary.faker
         private readonly Stack<Type> _fakerStack = new Stack<Type>();
 
         private readonly List<FakerGeneratorRule> _fakerRules;
+
 
         public T Create<T>()
         {
@@ -77,7 +79,8 @@ namespace FakerLibrary.faker
             return (T) constructed;
         }
 
-        private void GenerateFieldsAndProperties(object constructed, IReadOnlyList<object> ctorParams, MethodBase cInfo)
+        private void GenerateFieldsAndProperties(object constructed, IReadOnlyList<object> ctorParams,
+            ConstructorInfo cInfo)
         {
             var pInfo = cInfo?.GetParameters();
             var fields = constructed.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public)
@@ -86,13 +89,12 @@ namespace FakerLibrary.faker
                 .Cast<MemberInfo>();
             var fieldsAndProperties = fields.Concat(properties);
 
-            foreach (var m in fieldsAndProperties)
+            foreach (MemberInfo m in fieldsAndProperties)
             {
                 var wasInitialized = false;
 
                 var memberType = (m as FieldInfo)?.FieldType ?? (m as PropertyInfo)?.PropertyType;
-                var memberValue = (m as FieldInfo)?.GetValue(constructed) ??
-                                  (m as PropertyInfo)?.GetValue(constructed);
+                var memberValue = (m as FieldInfo)?.GetValue(constructed) ?? (m as PropertyInfo)?.GetValue(constructed);
 
                 for (var i = 0; i < ctorParams?.Count; i++)
                 {
@@ -106,19 +108,18 @@ namespace FakerLibrary.faker
                 }
 
                 if (wasInitialized) continue;
-                object newValue = default; 
+                object newValue = default;
                 try
                 {
                     if (_fakerRules?.Any(r =>
                         (r.TargetFieldType == memberType) && (r.ParentClassType == constructed.GetType()) &&
                         (r.FieldName == m.Name)) == true)
                     {
-                        var gen = Activator.CreateInstance(_fakerRules.Single(r =>
-                            (r.TargetFieldType == memberType) && (r.ParentClassType == constructed.GetType())
-                                                              && (r.FieldName == m.Name)).FieldGeneratorType);
+                        var gen = Activator.CreateInstance(_fakerRules.Single(r => (r.TargetFieldType == memberType) &&
+                            (r.ParentClassType == constructed.GetType())
+                            && (r.FieldName == m.Name)).FieldGeneratorType);
                         newValue = gen.GetType().InvokeMember("Generate",
-                            BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public, null, gen,
-                            null);
+                            BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public, null, gen, null);
                     }
                     else
                     {
@@ -126,15 +127,14 @@ namespace FakerLibrary.faker
                         {
                             newValue = _generators[memberType].GetType().InvokeMember("Generate",
                                 BindingFlags.InvokeMethod | BindingFlags.Instance
-                                                          | BindingFlags.Public, null, _generators[memberType],
-                                null);
+                                                          | BindingFlags.Public, null, _generators[memberType], null);
                         }
                         else
                         {
-                            var tmp = memberType.GetGenericArguments();
-                            newValue = _generators[tmp[0]].GetType().InvokeMember("GenerateList",
+                            newValue = _generators[typeof(IList)].GetType().InvokeMember("Generate",
                                 BindingFlags.InvokeMethod | BindingFlags.Instance
-                                                          | BindingFlags.Public, null, _generators[tmp[0]], null);
+                                                          | BindingFlags.Public, null, _generators[typeof(IList)],
+                                new object?[] {memberType, this});
                         }
                     }
                 }
@@ -142,8 +142,7 @@ namespace FakerLibrary.faker
                 {
                     if (!FakerUtils.IsPrimitive(memberType))
                     {
-                        newValue = GetType().GetMethod("Create").MakeGenericMethod(memberType)
-                            .Invoke(this, null);
+                        newValue = this.GetType().GetMethod("Create").MakeGenericMethod(memberType).Invoke(this, null);
                     }
                 }
 
@@ -155,6 +154,10 @@ namespace FakerLibrary.faker
             }
         }
 
+        private object GetDefaultValue<T>()
+        {
+            return default(T);
+        }
 
         private object[] GenerateCtorParams(ConstructorInfo cInfo)
         {
@@ -191,9 +194,10 @@ namespace FakerLibrary.faker
                         else
                         {
                             var tmp = fieldType.GetGenericArguments();
-                            newValue = _generators[tmp[0]].GetType().InvokeMember("GenerateList",
+                            newValue = _generators[typeof(IList)].GetType().InvokeMember("Generate",
                                 BindingFlags.InvokeMethod |
-                                BindingFlags.Instance | BindingFlags.Public, null, _generators[tmp[0]], null);
+                                BindingFlags.Instance | BindingFlags.Public, null, _generators[typeof(IList)],
+                                new object[] {fieldType, this});
                         }
                     }
                 }
@@ -201,7 +205,8 @@ namespace FakerLibrary.faker
                 {
                     if (!FakerUtils.IsPrimitive(fieldType))
                     {
-                        newValue = GetType().GetMethod("Create")?.MakeGenericMethod(fieldType).Invoke(this, null);
+                        newValue = GetType().GetMethod("Create")?.MakeGenericMethod(fieldType)
+                            .Invoke(this, new object[] {fieldType, this});
                     }
                 }
 
@@ -211,7 +216,7 @@ namespace FakerLibrary.faker
             return ctorParams;
         }
 
-        public Faker()
+        private Faker()
         {
             _generators = FakerUtils.LoadAllAvailableGenerators();
         }
@@ -219,6 +224,7 @@ namespace FakerLibrary.faker
         public Faker(FakerConfiguration config) : this()
         {
             _fakerRules = config.FakerGeneratorRules;
+            _generators = FakerUtils.LoadAllAvailableGenerators();
         }
     }
 }

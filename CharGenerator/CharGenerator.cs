@@ -1,9 +1,9 @@
 ﻿using System;
 using FakerLibrary.generators;
 
-namespace CharPlugin
+namespace CharGenerator
 {
-    public class CharGenerator : IGenerator
+    public class CharGenerator : IPrimitiveGenerator<char>
     {
         private readonly Random _random;
 

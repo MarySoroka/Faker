@@ -5,11 +5,11 @@ using FakerLibrary.generators;
 
 namespace FakerLibrary.faker
 {
-    public abstract class FakerConfiguration
+    public class FakerConfiguration
     {
         internal List<FakerGeneratorRule> FakerGeneratorRules { get; }
 
-        protected FakerConfiguration(List<FakerGeneratorRule> fakerGeneratorRules)
+        public FakerConfiguration(List<FakerGeneratorRule> fakerGeneratorRules)
         {
             FakerGeneratorRules = fakerGeneratorRules;
         }
