@@ -1,19 +1,13 @@
 ﻿using System;
+using FakerLibrary.faker;
 
 namespace FakerLibrary.generators
 {
-    public class FloatGenerator: IPrimitiveGenerator<float>
+    public class FloatGenerator: Generator<float>
     {
-        private readonly Random _random;
-
-        public FloatGenerator()
+        protected override float Generate(FakerContext context)
         {
-            _random = new Random();
-        }
-
-        public float Generate()
-        {
-            return (float) _random.NextDouble();
+            return (float) context.Random.NextDouble();
         }
     }
 }

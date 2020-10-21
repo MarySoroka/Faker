@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Linq;
+using FakerLibrary.faker;
 
 namespace FakerLibrary.generators
 {
-    public class StringGenerator : IPrimitiveGenerator<string>
+    public class StringGenerator : Generator<string>
     {
-        private readonly Random _random;
         private const int StringLength = 10;
         private const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        public StringGenerator()
-        {
-            _random = new Random();
-        }
 
-        public string Generate()
+        protected override string Generate(FakerContext context)
         {
             return new string(Enumerable.Repeat(Chars, StringLength)
-                .Select(finalString => finalString[_random.Next(finalString.Length)]).ToArray());
+                .Select(finalString => finalString[context.Random.Next(finalString.Length)]).ToArray());
         }
     }
 }

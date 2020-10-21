@@ -1,20 +1,15 @@
 ﻿using System;
+using FakerLibrary.faker;
 using FakerLibrary.generators;
 
 namespace CharGenerator
 {
-    public class CharGenerator : IPrimitiveGenerator<char>
+    public class CharGenerator : Generator<char>
     {
-        private readonly Random _random;
 
-        public CharGenerator()
+        protected override char Generate(FakerContext context)
         {
-            _random = new Random();
-        }
-
-        public char Generate()
-        {
-            return (char) _random.Next(255);
+            return (char) context.Random.Next(255);
         }
     }
 }

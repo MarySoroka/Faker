@@ -1,20 +1,14 @@
 ﻿using System;
+using FakerLibrary.faker;
 using FakerLibrary.generators;
 
 namespace DoubleGenerator
 {
-    public class DoubleGenerator : IPrimitiveGenerator<double>
+    public class DoubleGenerator : Generator<double>
     {
-        private readonly Random _random;
-
-        public DoubleGenerator()
+        protected override double Generate(FakerContext context)
         {
-            _random = new Random();
-        }
-
-        public double Generate()
-        {
-            return _random.NextDouble();
+            return context.Random.NextDouble();
         }
     }
 }

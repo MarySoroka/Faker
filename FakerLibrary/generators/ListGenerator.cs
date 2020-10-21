@@ -5,60 +5,31 @@ using FakerLibrary.faker;
 
 namespace FakerLibrary.generators
 {
-    public class ListGenerator : ICollectionGenerator<IList>
+    public class ListGenerator : IGenerator
     {
-        private readonly Random _random;
 
-        public ListGenerator()
-        {
-            _random = new Random();
-        }
-
-        public IList Generate(Type baseType, Faker faker)
+        public object Generate(FakerContext context)
         {
             var listType = typeof(List<>);
-            var elementType = baseType.GetGenericArguments()[0];
+            var elementType = context.TargetType.GetGenericArguments()[0];
             var constructedListType = listType.MakeGenericType(elementType);
-            var obj = (IList) Activator.CreateInstance(constructedListType);
-            var count = _random.Next(1, 16);
-
-            for (var i = 0; i < count; i++)
+            var instance = (IList) Activator.CreateInstance(constructedListType);
+            for (var i = 0; i < 5; i++)
             {
-                switch (elementType.Name)
-                {
-                    case "Double":
-                        obj?.Add(faker.Create<double>());
-                        break;
-                    case "Long":
-                        obj?.Add(faker.Create<long>());
-                        break;
-                    case "Short":
-                        obj?.Add(faker.Create<short>());
-                        break;
-                    case "String":
-                        obj?.Add(faker.Create<string>());
-                        break;
-                    case "Boolean":
-                        obj?.Add(faker.Create<bool>());
-                        break;
-                    case "Char":
-                        obj?.Add(faker.Create<char>());
-                        break;
-                    case "DateTime":
-                        obj?.Add(faker.Create<DateTime>());
-                        break;
-                    case "Integer":
-                        obj?.Add(faker.Create<int>());
-                        break;
-                    case "Float":
-                        obj?.Add(faker.Create<float>());
-                        break;
-                }
-
-                ;
+                instance?.Add(context.Faker.Create(elementType));
             }
 
-            return obj;
+            return instance;
+        }
+
+        public bool CanGenerate(Type type)
+        {
+            if (type.IsGenericType)
+            {
+                return type.GetGenericTypeDefinition() == typeof(List<>);
+            }
+
+            return false;
         }
     }
 }

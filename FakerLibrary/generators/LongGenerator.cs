@@ -1,19 +1,13 @@
 ﻿using System;
+using FakerLibrary.faker;
 
 namespace FakerLibrary.generators
 {
-    public class LongGenerator : IPrimitiveGenerator<long>
+    public class LongGenerator : Generator<long>
     {
-        private readonly Random _random;
-
-        public LongGenerator()
+        protected override long Generate(FakerContext context)
         {
-            _random = new Random();
-        }
-
-        public long Generate()
-        {
-            return _random.Next() << 31 | _random.Next();
+            return context.Random.Next() << 31 | context.Random.Next();
         }
     }
 }

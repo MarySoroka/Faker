@@ -1,21 +1,13 @@
 using System;
+using FakerLibrary.faker;
 
 namespace FakerLibrary.generators
 {
-    public class BooleanGenerator:IPrimitiveGenerator<bool>
+    public class BooleanGenerator : Generator<bool>
     {
-        private readonly Random _random;
-
-        public BooleanGenerator()
+        protected override bool Generate(FakerContext context)
         {
-            _random = new Random();
+            return context.Random.Next(0, 2) != 0;
         }
-        
-        public bool Generate()
-        {
-            return _random.Next(0, 2) != 0;
-            
-        }
-        
     }
 }

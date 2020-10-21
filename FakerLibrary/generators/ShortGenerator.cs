@@ -1,19 +1,13 @@
 ﻿using System;
+using FakerLibrary.faker;
 
 namespace FakerLibrary.generators
 {
-    public class ShortGenerator: IPrimitiveGenerator<short>
+    public class ShortGenerator: Generator<short>
     {
-        private readonly Random _random;
-
-        public ShortGenerator()
+        protected override short Generate(FakerContext context)
         {
-            _random = new Random();
-        }
-        
-        public short Generate()
-        {
-            return (short) _random.Next(0,255);
+            return (short) context.Random.Next(0,255);
         }
     }
 }
